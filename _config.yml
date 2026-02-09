@@ -1,0 +1,13 @@
+title: Beyond Algos
+description: A technical blog
+url: "https://jplemoussu.github.io"
+baseurl: "/beyond-algos"
+
+theme: minima
+minima:
+  skin: dark
+
+permalink: /:title/
+
+header_pages:
+  - about.md
