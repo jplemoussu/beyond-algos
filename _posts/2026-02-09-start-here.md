@@ -21,7 +21,7 @@ Whether you like it or not, financial markets control your quality of life. I le
 
 In typical Silicon Valley HR style, I came up to the office one morning, got summoned to a meeting room on a different floor, and was asked to hand over my access card. Perfect timing - my wife was pregnant with our first, and we'd just started repayments on our first home.
 
-On the positive side, after seven years I'd accumulated a bunch of PayPal shares which were suddenly gaining in value due to rising interest in the fintech industry. On second thought, maybe I should also become an angry shareholder, rather than be at the mercy of one. It was clear I had to figure out this stock market thing, using my employee shares as starting capital. Having experience in SaaS, I decided to focus on the US market since the ASX is mostly banks and miners, which I knew nothing about.
+On the positive side, after seven years I'd accumulated a bunch of PayPal shares which were suddenly gaining in value due to rising interest in the fintech industry. On second thought, maybe I should also become an angry shareholder, rather than be at the mercy of one. It was clear I had to figure out this stock market thing, using my employee shares as starting capital. Having experience in the software industry, I decided to focus on the US market since the ASX is mostly banks and miners, the latter I knew nothing about.
 
 ## Why did I build my own trading system from scratch?
 
@@ -33,7 +33,7 @@ What I didn't realise is that investing is essentially a mentally draining chain
 
 Why couldn't I offload all this mental load to a computer? Surely I could learn Python, run some pandas operations, and watch the balance increase? Keep reading to find out how that turned out.
 
-<sup>1</sup>I believe that's still the case today. QuantConnect (founded in NZ) offers a comprehensive solution, but focuses more on backtesting and research rather than real-time risk management and execution. It's fairly pricey and the entry plan limits you to two live strategies. I'm also wary of fully relying on a third party in a different jurisdiction to manage my money - there's no guarantee any platform you use today will be around in 10 years.
+<sup>1</sup>*I believe that's still the case today. QuantConnect (founded in NZ) offers a comprehensive solution, but focuses more on backtesting and research rather than real-time risk management and execution. It's fairly pricey and the entry plan limits you to two live strategies. I'm also wary of fully relying on a third party in a different jurisdiction to manage my money - there's no guarantee any platform you use today will be around in 10 years.*
 
 ![Technical analysis](/beyond-algos/assets/images/start-here/ta-dinosaur.webp)
 <sup>2</sup> *Technical analysis in a nutshell. A lot of it is made up nonsense, but some concepts like momentum and trendlines hold up and are essential for algorithmic trading.*
