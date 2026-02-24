@@ -5,7 +5,7 @@ baseurl: "/beyond-algos"
 
 theme: minima
 minima:
-  skin: dark
+  skin: classic
 
 permalink: /:title/
 
