@@ -6,14 +6,13 @@ date: 2026-02-09
 
 ## Why write a blog?
 
-As I write this in 2026, I've been working on an automated platform to manage my investments for over four years. The idea behind this blog is to record my journey, organise my thoughts, and perhaps more importantly, provide a guidebook to my children so they don't repeat the same mistakes I made.
+As I write this in 2026, I've been working on an automated platform to manage my equities investment portfolio for over four years. The idea behind this blog is to record my journey, organise my thoughts, and perhaps more importantly, provide a guidebook to my children so they don't repeat the same mistakes I made.
 
 With the rise of agentic coding, by leaving a trace of my learnings and thought process, anyone with access to the codebase should be able to maintain it or rewrite it in whatever language is popular in the future. Technology changes, but financial markets are a necessity to any successful economy. The underlying human behaviours that drive them - greed and fear - are timeless. The investment and risk management principles I've implemented should remain applicable for a long time to come.
 
 ## What content will I write about?
 
 Not sure! I can tell you what I *won't* write about: soulless LinkedIn self-promotion slop. There are plenty of fake engineers out there who rehash the same spaghetti code tutorials, pretending to be an expert in whatever tech is buzzing this week. Instead, I'll focus on core concepts for understanding financial markets and designing systematic trading systems, with some reflections along the way - hence the name "Beyond Algos". I'm not trying to sell you anything. I'll be candid about my mistakes and uncertainties, updating and referring back to old posts as I learn.
-
 
 ## What got me into equity markets?
 
