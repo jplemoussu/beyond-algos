@@ -21,8 +21,8 @@ Both TSLA and ISRG have key operations in the robotics space, but they are class
 
 Unlike GICS or SIC, our investment themes are flexible and constantly changing depending on our investment focus.
 We may want to track themes such as:
-- **AI native**: companies from different industries that have built their products and services around AI from the ground up, thus having an advantage over incumbents.
-- **defense**, **space-technology**: companies that are involved in BOTH defense and space technology sector to captuire a geopolitical theme.
+- **AI picks and shovels**: companies that provide the underlying infrastructure for AI development and deployment
+- **defense**, **space-technology**: companies involved in BOTH defense and space technology sector to capture a geopolitical theme.
 - **cybersecurity**: companies that provide products and services to protect against exponential threat of AI powered cyber attacks.
 
 
@@ -30,17 +30,17 @@ We may want to track themes such as:
 
 Our goal is to tag 3,000+ companies that match a theme at least quarterly, so we can use them as a filter for our trading strategies.
 
-Not being in the mood to manually tag a training set of 100+ companies every time a new theme is added — good luck finding 100 space technology companies — I decided this was a perfect use case for what I call **YOLO LLM**: submit the raw data with a basic prompt and let the AI serf do the work. We forward the business section of each SEC filing and rely on the LLM's ability to pick up semantic meaning and tag companies accordingly. Exactly what an LLM should be good at.
+Not been keen to manually tag a training set of 100+ companies — good luck finding 100 space technology companies — I decided this was a perfect use case for what I call **YOLO LLM**: submit the raw data with a basic prompt and let the AI serf do the work. We forward the business section of each SEC filing and rely on the LLM's ability to pick up semantic meaning and tag companies accordingly. Exactly what an LLM should be good at.
 
 ## Workflow vs. cost engineering
 
-For non-core features, the ideal solution is the quickest path to acceptable results without overengineering code I'll have to maintain. This is especially true with any AI powered workflow. Time and time again we've seen manual LLM workarounds be later absorbed by the LLM API and rendered completely obsolete: prompt chaining, output parsing, RAG stitching and tool calls.
+For non-core features, the ideal solution is the quickest path to acceptable results without overengineering code you'll have to maintain. This is especially true with any AI powered workflow. Time and time again we've seen workarounds be later absorbed by the LLM API and rendered completely obsolete: prompt chaining, output parsing, RAG stitching and tool calls.
 
 Unintuitively, extracting meaning from a ~8,000 words SEC business section for 3,000 companies seems like it should be straightforward with a **Batch** LLM API. It isn't due to how pricing is designed. The problem is not so much about the complexity of the task, but how you manage input tokens.
 
 The moment you use an LLM, you're not just building a workflow — you're negotiating a cost structure, and every token is a line item. While per-token pricing should decrease over time with improved hardware and increased competition, this is by no means a guarantee. LLM pricing is artificially subsidised by VC capital in a land-grab phase.
 
-Same logic applies to open-source models — the per-token bill just shifts to hardware or cloud compute.
+Though not tested here, same logic should apply to open-source models — the per-token bill just shifts to hardware or cloud compute.
 
 ## Labelling Prompt
 
@@ -129,24 +129,25 @@ Zero-shot labelling works because each theme ships with its own instructions. Ad
 
 To open the negotiation, we start with the least intelligent family member that can achieve acceptable precision on raw, unaltered data. From there, we gradually trim the input to drive the cost down.
 
-Sonnet 4 is the first model that picks up on nuances. Haiku and its cheaper cousins lack the ability to correctly tag edge-case themes like "ground-truth-data" or "ai-picks-and-shovels".
+Sonnet 4 is the first model that picks up on nuances. Haiku and its cheaper cousins lack the ability to correctly tag edge-case themes like "ai-picks-and-shovels".
 
 ![Claude API costs by model]({{ '/assets/images/investment-themes/claude-costs.png' | relative_url }})
 *Costs as of Feb 2026*
 
-Batch processing comes with a 50% discount, so base rate is $1.5/Mtok. At ~20,000 tokens per company (business section + prompt), that's $0.03/company — or $90 worst case for 3,000 companies, before any caching savings (see [Playing cache roulette](#playing-cache-roulette)). Let's see how much further we can squeeze it.
+Batch processing comes with a 50% discount — base rate drops to $1.5/Mtok. At ~20,000 tokens per company (business section + prompt), that's $0.03/company on paper before caching savings (see [Playing cache roulette](#playing-cache-roulette)). Let's see what it actually costs.
 
-Here's how the negotiation rounds went. Discount indicates improvement from the best attempt so far.
+Here's how the negotiation rounds went. Discount column shows improvement from best prior attempt.
 
-| Round | Cost per company | Cache read/write ratio | F1<sup>1</sup> | Notes |
-|-------|-------------|-----------|-----|-------|
-| 1 | $0.057 | - | — | Smoke test, no benchmark |
-| 2 | $0.040 | 0.213 | 81.48% | Baseline |
-| 3 | $0.022 | 12.000 | 85.71% | Drop extra reasoning trace in response |
-| 4 | $0.033 | 0.110 | 86.54% | Cleanse and trim input — cache backfired! |
-| 5 | $0.018 | 0.583 | 85.39% | Hack cramming 5 companies per request |
-| 6 | $0.018 | 0.010 | — | Scale to 1,000 with 10 companies per request|
-| 7 | $0.018 | 0.316 | — | Change 5min to 1h cache TTL, no difference! |
+| Round | Cost per company | Discount | Cache read/write ratio | F1<sup>1</sup> | Notes |
+|-------|-------------|-----------|-----------|-----|-------|
+| 1 | $0.057 | — | - | — | Smoke test |
+| 2 | $0.040 | <span style="color:#22c55e">↓30%</span> | 0.213 | 81.48% | Baseline |
+| 3 | $0.022 | <span style="color:#22c55e">↓44%</span> | 12.000 | 85.71% | Drop extra reasoning trace in response |
+| 4 | $0.033 | <span style="color:#ef4444">↑+50%</span> | 0.110 | 86.54% | Cleanse and trim input — cache backfired! |
+| 5 | $0.018 | <span style="color:#22c55e">↓20%</span> | 0.583 | 85.39% | Hack cramming 5 companies per request |
+| 6 | $0.018 | → | 0.010 | — | Scale to 1,000 with 10 companies per request|
+| 7 | $0.018 | → | 0.316 | — | Change 5min to 1h cache TTL, no difference! |
+| 8 | $0.016 | <span style="color:#22c55e">↓11%</span> | N/A | — | No caching at all, removes the cache write premium and variability |
 
 <small><sup>1</sup> F1 score measures tagging accuracy — it penalises both missing companies that should be tagged and tagging companies that shouldn't be. 100% is perfect; anything above 80% is solid for a zero-shot classifier.</small>
 
@@ -155,24 +156,17 @@ Here's how the negotiation rounds went. Discount indicates improvement from the 
 Not off to a great start! With a batch of only 5 requests the cache savings are probably not kicking in yet.
 It's like negotiating to buy fake Labubus from Yiwu, you gotta commit for a large order first.
 
-Result: **$0.057/company**
-
-
 ---
 
 **Round 2** — Baseline test using labelled benchmark of ~100 companies
 
 Nice results out of the box with precision of 81.48%. The model is able to pick up on nuances and correctly classify companies that are borderline cases. The cost is still quite high. Perhaps due to output token costs of reasoning trace in the response.
 
-Result: **$0.040/company** — <span style="color:#22c55e">↓30%</span> · F1 81.48%
-
 ---
 
 **Round 3** — Retry with reasoning stripped out
 
-44% cost reduction with no impact on precision! The extra reasoning trace is nice to have for diagnostics, but not worth the cost for production runs.
-
-Result: **$0.022/company** — <span style="color:#22c55e">↓44%</span> · F1 85.71%
+44% cost reduction with no impact on precision! The extra reasoning trace is nice to have for diagnostics, but not worth the $7.5/Mtok (15 x 50% batch discount) output tokens cost for large runs. 
 
 ---
 
@@ -191,10 +185,8 @@ Example of headers that precede the ESG boilerplate:
 ],
 ```
 
-Removing boilerplates and truncating the input to 100K characters results in a combined ~29% reduction of total words for an entire batch.
-After all this work cleansing, we get a ... INCREASE in cost? This run had horrendous read/write cache ratio, so the expected savings from input tokens got eaten up by additional write costs.
-
-Result: **$0.033/company** — <span style="color:#ef4444">↑+50% (cache backfired!)</span> · F1 86.54%
+Removing boilerplates and truncating the input to 100K characters results in ~29% total input tokens reduction for the batch.
+After all this work cleansing, we get an ... INCREASE in cost? This run had a poor read/write cache ratio, expected savings from input tokens got eaten up by additional write costs.
 
 ---
 
@@ -204,9 +196,7 @@ To reduce the number of requests and increase the chances of hitting the cache, 
 ```text
 You will receive multiple companies to classify. Return results for ALL companies keyed by their ticker symbol.
 ```
-Surprisingly this works well — a further 20% discount, much better cache r/w ratio, and barely any impact on precision.
-
-Result: **$0.018/company** — <span style="color:#22c55e">↓20%</span> · F1 85.39%
+This works surprisingly well — a further 20% discount, much better cache read/write ratio, and barely any impact on precision.
 
 ---
 
@@ -214,23 +204,26 @@ Result: **$0.018/company** — <span style="color:#22c55e">↓20%</span> · F1 8
 
 We now pack 10 companies per request to check if the cost reduction continues to hold. The cost remains stable at $0.018/company, even with a poor cache hit rate.
 
-Result: **$0.018/company** — flat
+---
+
+**Round 7** — Another set of 1,000 companies - 1h caching
+
+We increase the cache TTL from 5 mins to 1h to see if it improves cache hits. No such luck.
 
 ---
 
-**Round 7** — Another set of 1,000 companies
+**Round 8** — Another set of 1,000 companies - No caching
 
-Increase the cache TTL from 5 mins to 1h to see if it reduced costs. No such luck.
+We finally give up on cache. And indeed, we get a further 11% cost reduction by eliminating the cache write premium and variability. 
 
-Result: **$0.018/company** — flat
 
 ...
 
 At this point I stopped. I'd rather buy my kids an ice cream than keep watching my token credit slowly evaporate. Any further gains would be marginal and require more data massaging than it's worth.
 
-$0.018/company isn't cheap at scale, but getting there took less than a day and zero labelled training data. For a non critical task which would have taken weeks with a classical classifier, that's a decent trade.
+$0.016/company isn't cheap at scale, but getting there took less than a day and zero labelled training data. For a non critical task which would have taken weeks with a classical classifier, that's a decent trade.
 
-I now realise this experiment provided me with the labelled training data I need for a classifier approach, so I will do a part II to see how a fined tune open model performs on the same task.
+I now realise this experiment provided me with the labelled training data I need for a classifier approach, so I will do a part II to see how a fine-tuned open model performs on the same task.
 
 ---
 
@@ -254,35 +247,4 @@ We can ask to cache the instructions by adding a flag in the request. Subsequent
 
 Straightforward? Not quite.
 
-WRITING to the cache incurs a cost of 1.25x for 5 mins caching, and 2x for 1h caching. Anthropic processes requests across parallel workers, and you have zero control on the number of workers or the time it takes to process each request. Tests shows wild swings in cost, with a read/write ratio as low as 0.01 to as high as 12.0. Enabling the 'cache ttl" flag is akin to entering a lucky draw.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+WRITING to the cache incurs a cost of 1.25x for 5 mins caching, and 2x for 1h caching. Anthropic processes requests across parallel workers, and you have zero control on the number of workers or the time it takes to process each request. Tests show wild swings in cost, with a read/write ratio as low as 0.01 to as high as 12.0. Enabling the 'cache_control' flag is akin to entering a lucky draw.
