@@ -4,7 +4,7 @@ title: "Custom investment themes: YOLO LLM tagging (Part I)"
 date: 2026-02-15
 ---
 
-## Themes ≠ standard classifications
+## Themes ≠ industry classifications
 
 I ran into a gap implementing an aggressive momentum strategy to trade thematic stocks.
 
@@ -138,7 +138,7 @@ Batch processing comes with a 50% discount, so base rate is $1.5/Mtok. At ~20,00
 
 Here's how the negotiation rounds went. Discount indicates improvement from the best attempt so far.
 
-| Round | Cost/company | Cache r/w | F1<sup>1</sup> | Notes |
+| Round | Cost per company | Cache read/write ratio | F1<sup>1</sup> | Notes |
 |-------|-------------|-----------|-----|-------|
 | 1 | $0.057 | - | — | Smoke test, no benchmark |
 | 2 | $0.040 | 0.213 | 81.48% | Baseline |
@@ -191,7 +191,7 @@ Example of headers that precede the ESG boilerplate:
 ],
 ```
 
-Removing boilerplates and truncating the input to 100K characters results in a combined ~29% reduction of total words accross batches.
+Removing boilerplates and truncating the input to 100K characters results in a combined ~29% reduction of total words for an entire batch.
 After all this work cleansing, we get a ... INCREASE in cost? This run had horrendous read/write cache ratio, so the expected savings from input tokens got eaten up by additional write costs.
 
 Result: **$0.033/company** — <span style="color:#ef4444">↑+50% (cache backfired!)</span> · F1 86.54%
@@ -226,10 +226,9 @@ Result: **$0.018/company** — flat
 
 ...
 
-At this point I'd rather buy my kids an ice cream than keep watching my token credit evaporate further. Any further gains would be marginal and require more data massaging than it's worth.
+At this point I stopped. I'd rather buy my kids an ice cream than keep watching my token credit slowly evaporate. Any further gains would be marginal and require more data massaging than it's worth.
 
-$0.018/company isn't cheap at scale, but getting there took less than a day and zero labelled training data. For something that would have taken weeks with a classical classifier, that's a decent trade.
-
+$0.018/company isn't cheap at scale, but getting there took less than a day and zero labelled training data. For a non critical task which would have taken weeks with a classical classifier, that's a decent trade.
 
 I now realise this experiment provided me with the labelled training data I need for a classifier approach, so I will do a part II to see how a fined tune open model performs on the same task.
 
