@@ -12,15 +12,15 @@ With the rise of agentic coding, by leaving a trace of my learnings and thought 
 
 ## What content will I write about?
 
-Not sure! I can tell you what I *won't* write about: soulless LinkedIn self-promotion slop. There are plenty of fake engineers out there who rehash the same spaghetti code tutorials, pretending to be an expert in whatever tech is buzzing this week. Instead, I'll focus on core concepts for understanding financial markets and designing systematic trading systems, with some reflections along the way - hence the name "Beyond Algos". I'm not trying to sell you anything. I'll be candid about my mistakes and uncertainties, updating and referring back to old posts as I learn.
+Not sure! I can tell you what I *won't* write about: shameless self-promotion slop. There are plenty of fake engineers out there who rehash the same spaghetti code tutorials, pretending to be an expert in whatever tech is buzzing this week. Instead, I'll focus on core concepts for understanding financial markets and designing systematic trading systems, with some reflections along the way - hence the name "Beyond Algos". I'm not trying to sell you anything. I'll be candid about my mistakes and uncertainties, updating and referring back to old posts as I learn.
 
 ## What got me into equity markets?
 
-Whether you like it or not, financial markets control your quality of life. I learned this early in my career thanks to an angry old man: Carl Icahn. In a weird butterfly effect, his actions to push eBay to spin out PayPal and boost his newly acquired stake in the company caused a chain reaction that resulted in me losing my job. During the reshuffle, they decided to close APAC product management and centralise it back to the US. My role was eliminated. 
+Whether you like it or not, financial markets control your quality of life. I learned this early in my career thanks to an angry old man: Carl Icahn. In a weird butterfly effect, his actions to push eBay to spin-off PayPal and boost his newly acquired stake in the company caused a chain reaction that resulted in me losing my job. During the reshuffle, they decided to close APAC product management and centralise it back to the US. My role was eliminated. 
 
 In typical Silicon Valley HR style, I came up to the office one morning, got summoned to a meeting room on a different floor, and was asked to hand over my access card. Perfect timing - my wife was pregnant with our first, and we'd just started repayments on our first home.
 
-On the positive side, after seven years I'd accumulated a bunch of PayPal shares which were suddenly gaining in value due to rising interest in the fintech industry. On second thought, maybe I should also become an angry shareholder, rather than be at the mercy of one. It was clear I had to figure out this stock market thing, using my employee shares as starting capital. Having experience in the software industry, I decided to focus on the US market since the ASX is mostly banks and miners, the latter I knew nothing about.
+On the positive side, I accumulated a few company shares which I had no idea what to do with. On second thought, maybe I should also become an angry shareholder, rather than be at the mercy of one. It was clear I had to figure out this stock market thing. Having experience in the software industry, I decided to focus on the US market instead of the local ASX which was (and still is today) mostly banks and miners.
 
 ## Why did I build my own trading system from scratch?
 

@@ -1,2 +1,0 @@
-- Speculating vs investing
-- essential readings for understanding financial markets
